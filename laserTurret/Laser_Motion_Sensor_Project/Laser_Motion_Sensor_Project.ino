@@ -33,13 +33,14 @@ void loop()
 void serialEvent() 
 {
   serial_data = Serial.readString();  
+  
   int x = parse_x(serial_data);
   int y = parse_y(serial_data);
   
-  Serial.println("X" + String(servo_x.read()) + "Y" + String(servo_y.read()));
-  
   servo_x.write(x);
   servo_y.write(y);
+  
+  Serial.println("X" + String(servo_x.read()) + "Y" + String(servo_y.read()));
 }
 
 int parse_x(String data)

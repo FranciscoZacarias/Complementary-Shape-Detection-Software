@@ -13,8 +13,16 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 
+
+
 namespace form1
 {
+    static class Constants
+    {
+        public const double divisor_x = 2.38;
+        public const double divisor_y = 4.97;
+    }
+
     public partial class Application : Form
     {
         Capture capture;
@@ -22,13 +30,13 @@ namespace form1
         CircleF[] circles;
 
         Stopwatch watch { get; set; }
+        String read_serial;
 
         String servo_x;
         String servo_y;
+        PointF circle_coords;
 
-        //for manual move
-        Point pt;
-        int debug;
+        bool isDetecting = false;
 
         public Application()
         {
@@ -48,7 +56,7 @@ namespace form1
 
                 System.Windows.Forms.Application.Idle += newFrame; 
 
-                lbl_cameraDimensions.Text += " Width:" + capture.Width.ToString() + " Height:" + capture.Height.ToString();
+                lbl_cameraDimensions.Text = "Cam. Dimensions: W:" + capture.Width.ToString() + "H:" + capture.Height.ToString();
             }
             catch (Exception ex)
             {
@@ -69,23 +77,40 @@ namespace form1
             foreach (CircleF circle in circles)
             {
                 circleImage.Draw(circle, new Bgr(Color.Brown), 2);
-                lbl_circlepoint.Text = "Circle Coords: " + circle.Center;
+                circle_coords = circle.Center;
+                lbl_circlepoint.Text = "Circle Coords: " + circle_coords;
+
+                if (watch.ElapsedMilliseconds > 15 && isDetecting)
+                {
+                    watch = Stopwatch.StartNew();
+                    port.Write(String.Format("X{0}Y{1}", (circle_coords.X / Constants.divisor_x), (circle_coords.Y / Constants.divisor_y)));
+                }
             }
             imgbox_detection.Image = circleImage;
 
             //get laser angle from serial data
-            String read_serial = port.ReadExisting().ToString();
+            read_serial = port.ReadExisting().ToString().Replace(Environment.NewLine, "");
+            readAndParseSerialData(read_serial);
+            lbl_laserAngle.Text = String.Format("Laser Coords: X:{0} Y:{1}", servo_x, servo_y);
+        }
 
-            
-            if (read_serial.Length > 0)
+        public void readAndParseSerialData(String serialdata )
+        {
+            Console.WriteLine("{" + read_serial + "}");
+            try
             {
-                Console.WriteLine("{0} Serial Data: " + read_serial, ++debug);
-                /*
                 servo_x = read_serial.Substring(0, read_serial.IndexOf("Y")).Substring(1);
-                servo_y = read_serial.Substring(read_serial.IndexOf("Y")).Substring(1);  //Length cannot be less than zero.
-                lbl_laserAngle.Text = String.Format("Laser Coords: X:{0} Y:{1}", servo_x, servo_y);
-                */
+                servo_y = read_serial.Substring(read_serial.IndexOf("Y")).Substring(1);
             }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+            }
+        }
+
+        public void writeToPortUnparsed(Point point)
+        {
+            port.Write(String.Format("X{0}Y{1}", point.X, point.Y));
         }
 
         public void openPort()
@@ -94,11 +119,6 @@ namespace form1
             {
                 port.Open();
             }
-        }
-
-        public void writeToPortUnparsed(Point coordinates)
-        {
-            port.Write(String.Format("X{0}Y{1}", coordinates.X, coordinates.Y));   
         }
 
         private void btn_exit_Click(object sender, EventArgs e)
@@ -123,26 +143,17 @@ namespace form1
             df.Show();
         }
 
-        private void btn_up_Click(object sender, EventArgs e)
+        private void btn_toggleDetect_Click(object sender, EventArgs e)
         {
-
+            isDetecting = !isDetecting;
+            if (isDetecting)
+            {
+                btn_toggleDetect.BackColor = Color.PaleGreen;
+            }
+            else
+            {
+                btn_toggleDetect.BackColor = Color.Tomato;
+            }
         }
-
-        private void btn_left_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void bnt_right_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        private void btn_down_Click(object sender, EventArgs e)
-        {
-            
-        }
-
-        
     }
 }
