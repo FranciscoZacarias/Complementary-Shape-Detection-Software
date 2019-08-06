@@ -17,12 +17,6 @@ using Emgu.CV.CvEnum;
 
 namespace form1
 {
-    static class Constants
-    {
-        public const double divisor_x = 2.38;
-        public const double divisor_y = 4.97;
-    }
-
     public partial class Application : Form
     {
         Capture capture;
@@ -52,7 +46,7 @@ namespace form1
 
             try
             {
-                capture = new Emgu.CV.Capture();  //Start Capture object that takes input from default camera
+                capture = new Emgu.CV.Capture();
 
                 System.Windows.Forms.Application.Idle += newFrame; 
 
@@ -80,9 +74,10 @@ namespace form1
                 circle_coords = circle.Center;
                 lbl_circlepoint.Text = "Circle Coords: " + circle_coords;
 
-                if (watch.ElapsedMilliseconds > 15 && isDetecting)
+                if (watch.ElapsedMilliseconds > 20 && isDetecting)
                 {
                     watch = Stopwatch.StartNew();
+                    Console.WriteLine(String.Format("X{0}Y{1}", (circle_coords.X / Constants.divisor_x), (circle_coords.Y / Constants.divisor_y)));
                     port.Write(String.Format("X{0}Y{1}", (circle_coords.X / Constants.divisor_x), (circle_coords.Y / Constants.divisor_y)));
                 }
             }
@@ -90,7 +85,8 @@ namespace form1
 
             //get laser angle from serial data
             read_serial = port.ReadExisting().ToString().Replace(Environment.NewLine, "");
-            readAndParseSerialData(read_serial);
+            if(read_serial.Length > 2)
+                readAndParseSerialData(read_serial);
             lbl_laserAngle.Text = String.Format("Laser Coords: X:{0} Y:{1}", servo_x, servo_y);
         }
 
