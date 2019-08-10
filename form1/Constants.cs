@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace form1
 {
-    static class Constants
+    public static class Constants
     {
         public const double divisor_x = 4;
         public const double divisor_y = 4;

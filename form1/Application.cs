@@ -19,16 +19,17 @@ namespace form1
 {
     public partial class Application : Form
     {
+        List<String> detectables = new List<string>() { "Circle", "Square" };
+
         Capture capture;
         Image<Bgr, Byte> originalImage;
-        CircleF[] circles;
+        List<Image<Bgr, Byte>> images_detected;
 
         Stopwatch watch { get; set; }
         String read_serial;
 
         String servo_x;
         String servo_y;
-        PointF circle_coords;
 
         bool isDetecting = false;
 
@@ -40,7 +41,12 @@ namespace form1
         private void Form1_Load(object sender, EventArgs e)
         {
             openPort();
-            writeToPortUnparsed(new Point(100,50));
+            writeToPortUnparsed(new Point(80, 80));
+
+            foreach (String detectable in detectables)
+                combobox_detecting.Items.Add(detectable);
+            combobox_detecting.SelectedIndex = 0;
+
 
             watch = Stopwatch.StartNew();
 
@@ -62,45 +68,33 @@ namespace form1
         private void newFrame(object sender, EventArgs arg)
         {
             //clean video
-            originalImage = capture.QueryFrame().ToImage<Bgr, Byte>().Rotate(270, new Bgr(Color.Black));
-            imgbox_video.Image = originalImage.Resize(640, 480, Inter.Nearest);
+            originalImage = capture.QueryFrame().ToImage<Bgr, Byte>();
+            imgbox_video.Image = originalImage.Resize(imgbox_video.Size.Width, imgbox_video.Size.Height, Inter.Nearest);
 
             //detection video
-            circles = Detector.detectCircle(originalImage);
-            Image<Bgr, Byte> circleImage = originalImage.CopyBlank();
-            foreach (CircleF circle in circles)
-            {
-                circleImage.Draw(circle, new Bgr(Color.Brown), 2);
-                circle_coords = circle.Center;
-                lbl_circlepoint.Text = "Circle Coords: " + circle_coords;
+            images_detected = Detector.DrawCircle(originalImage, lbl_circlepoint);
+            imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
+            imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
 
-                if (watch.ElapsedMilliseconds > 20 && isDetecting)
-                {
-                    watch = Stopwatch.StartNew();
-                    Console.WriteLine(String.Format("X{0}Y{1}", (circle_coords.X / Constants.divisor_x), (circle_coords.Y / Constants.divisor_y)));
-                    port.Write(String.Format("X{0}Y{1}", (circle_coords.X / Constants.divisor_x), (circle_coords.Y / Constants.divisor_y)));
-                }
-            }
-            imgbox_detection.Image = circleImage;
-
-            //get laser angle from serial data
-            read_serial = port.ReadExisting().ToString().Replace(Environment.NewLine, "");
-            if(read_serial.Length > 2)
-                readAndParseSerialData(read_serial);
-            lbl_laserAngle.Text = String.Format("Laser Coords: X:{0} Y:{1}", servo_x, servo_y);
+            //get laser angle
+            readSerialData();
         }
 
-        public void readAndParseSerialData(String serialdata )
+        private void readSerialData()
         {
-            Console.WriteLine("{" + read_serial + "}");
-            try
+            read_serial = port.ReadExisting().ToString().Replace(Environment.NewLine, "");
+            if (read_serial.Length > 2)
             {
-                servo_x = read_serial.Substring(0, read_serial.IndexOf("Y")).Substring(1);
-                servo_y = read_serial.Substring(read_serial.IndexOf("Y")).Substring(1);
-            }
-            catch (Exception e)
-            {
-                Console.WriteLine(e);
+                try
+                {
+                    servo_x = read_serial.Substring(0, read_serial.IndexOf("Y")).Substring(1);
+                    servo_y = read_serial.Substring(read_serial.IndexOf("Y")).Substring(1);
+                    lbl_laserAngle.Text = String.Format("Laser Coords: X:{0} Y:{1}", servo_x, servo_y);
+                }
+                catch (Exception e)
+                {
+                    Console.WriteLine(e);
+                }
             }
         }
 
@@ -112,9 +106,7 @@ namespace form1
         public void openPort()
         {
             if(!port.IsOpen)
-            {
                 port.Open();
-            }
         }
 
         private void btn_exit_Click(object sender, EventArgs e)

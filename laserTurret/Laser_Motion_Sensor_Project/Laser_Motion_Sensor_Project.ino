@@ -1,16 +1,18 @@
 #include<Servo.h>
 
-Servo servo_x;
-int servox = 11;
-Servo servo_y;
-int servoy = 10;
-
-String serial_data;
-
+//pins
 int relay = 8;
+int servoy = 10;
+int servox = 11;
 int laser = 13;
+//endpins
 
 int relay_state = HIGH;
+
+Servo servo_x;
+Servo servo_y;
+
+String serial_data;
 
 void setup() 
 {

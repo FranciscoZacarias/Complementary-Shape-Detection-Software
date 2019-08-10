@@ -27,6 +27,7 @@ namespace form1
 
         private void Form1_Load(object sender, EventArgs e)
         {
+            centerLabel();
             watch = Stopwatch.StartNew();
         }
 
@@ -52,15 +53,15 @@ namespace form1
             }
         }
 
-        private void Form1_MouseEnter(object sender, EventArgs e)
-        {
-            if (isMouseMoveActive)
-                Cursor.Clip = this.Bounds;
-        }
-
         private void btn_Exit_Click(object sender, EventArgs e)
         {
+            Cursor.Clip = Screen.PrimaryScreen.Bounds;
             this.Close();
+        }
+
+        private void toggleCursorClip()
+        {
+            Cursor.Clip = (Cursor.Clip == this.Bounds) ? Screen.PrimaryScreen.Bounds : this.Bounds; 
         }
 
         private void btn_send_Click(object sender, EventArgs e)
@@ -71,7 +72,18 @@ namespace form1
         private void DebugForm_MouseClick(object sender, MouseEventArgs e)
         {
             isMouseMoveActive = !isMouseMoveActive;
+            toggleCursorClip();
             lbl_mouseActive.Text = (isMouseMoveActive) ? "MOUSE ACTIVE" : "MOUSE INACTIVE";
+        }
+
+        private void centerLabel()
+        {
+            lbl_center.Location = new Point(Size.Width / 2, Size.Height / 2);
+        }
+
+        private void DebugForm_SizeChanged(object sender, EventArgs e)
+        {
+            centerLabel();
         }
     }
 }

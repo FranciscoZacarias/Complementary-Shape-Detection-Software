@@ -34,7 +34,6 @@
             this.imgbox_video = new Emgu.CV.UI.ImageBox();
             this.btn_exit = new System.Windows.Forms.Button();
             this.lbl_cameraDimensions = new System.Windows.Forms.Label();
-            this.imgbox_detection = new Emgu.CV.UI.ImageBox();
             this.lbl_circlepoint = new System.Windows.Forms.Label();
             this.lbl_laserAngle = new System.Windows.Forms.Label();
             this.btn_sendCoords = new System.Windows.Forms.Button();
@@ -47,8 +46,11 @@
             this.btn_toggleDetect = new System.Windows.Forms.Button();
             this.combobox_detecting = new System.Windows.Forms.ComboBox();
             this.lbl_detectiong = new System.Windows.Forms.Label();
+            this.imgbox_detection1 = new Emgu.CV.UI.ImageBox();
+            this.imgbox_detection2 = new Emgu.CV.UI.ImageBox();
             ((System.ComponentModel.ISupportInitialize)(this.imgbox_video)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgbox_detection)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgbox_detection1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgbox_detection2)).BeginInit();
             this.SuspendLayout();
             // 
             // port
@@ -74,7 +76,7 @@
             // 
             // btn_exit
             // 
-            this.btn_exit.Location = new System.Drawing.Point(1247, 646);
+            this.btn_exit.Location = new System.Drawing.Point(917, 648);
             this.btn_exit.Name = "btn_exit";
             this.btn_exit.Size = new System.Drawing.Size(75, 23);
             this.btn_exit.TabIndex = 5;
@@ -90,14 +92,6 @@
             this.lbl_cameraDimensions.Size = new System.Drawing.Size(85, 13);
             this.lbl_cameraDimensions.TabIndex = 6;
             this.lbl_cameraDimensions.Text = "Cam Dimensions";
-            // 
-            // imgbox_detection
-            // 
-            this.imgbox_detection.Location = new System.Drawing.Point(682, 12);
-            this.imgbox_detection.Name = "imgbox_detection";
-            this.imgbox_detection.Size = new System.Drawing.Size(640, 480);
-            this.imgbox_detection.TabIndex = 7;
-            this.imgbox_detection.TabStop = false;
             // 
             // lbl_circlepoint
             // 
@@ -151,7 +145,7 @@
             this.textbox_x.Name = "textbox_x";
             this.textbox_x.Size = new System.Drawing.Size(27, 20);
             this.textbox_x.TabIndex = 13;
-            this.textbox_x.Text = "80";
+            this.textbox_x.Text = "90";
             // 
             // textbox_y
             // 
@@ -159,7 +153,7 @@
             this.textbox_y.Name = "textbox_y";
             this.textbox_y.Size = new System.Drawing.Size(27, 20);
             this.textbox_y.TabIndex = 14;
-            this.textbox_y.Text = "80";
+            this.textbox_y.Text = "90";
             // 
             // btn_random
             // 
@@ -195,25 +189,42 @@
             // combobox_detecting
             // 
             this.combobox_detecting.FormattingEnabled = true;
-            this.combobox_detecting.Location = new System.Drawing.Point(741, 502);
+            this.combobox_detecting.Location = new System.Drawing.Point(356, 648);
             this.combobox_detecting.Name = "combobox_detecting";
-            this.combobox_detecting.Size = new System.Drawing.Size(96, 21);
+            this.combobox_detecting.Size = new System.Drawing.Size(94, 21);
             this.combobox_detecting.TabIndex = 29;
             // 
             // lbl_detectiong
             // 
             this.lbl_detectiong.AutoSize = true;
-            this.lbl_detectiong.Location = new System.Drawing.Point(679, 505);
+            this.lbl_detectiong.Location = new System.Drawing.Point(294, 649);
             this.lbl_detectiong.Name = "lbl_detectiong";
             this.lbl_detectiong.Size = new System.Drawing.Size(56, 13);
             this.lbl_detectiong.TabIndex = 30;
             this.lbl_detectiong.Text = "Detecting:";
             // 
+            // imgbox_detection1
+            // 
+            this.imgbox_detection1.Location = new System.Drawing.Point(672, 12);
+            this.imgbox_detection1.Name = "imgbox_detection1";
+            this.imgbox_detection1.Size = new System.Drawing.Size(320, 240);
+            this.imgbox_detection1.TabIndex = 7;
+            this.imgbox_detection1.TabStop = false;
+            // 
+            // imgbox_detection2
+            // 
+            this.imgbox_detection2.Location = new System.Drawing.Point(672, 252);
+            this.imgbox_detection2.Name = "imgbox_detection2";
+            this.imgbox_detection2.Size = new System.Drawing.Size(320, 240);
+            this.imgbox_detection2.TabIndex = 32;
+            this.imgbox_detection2.TabStop = false;
+            // 
             // Application
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1334, 681);
+            this.ClientSize = new System.Drawing.Size(1004, 681);
+            this.Controls.Add(this.imgbox_detection2);
             this.Controls.Add(this.lbl_detectiong);
             this.Controls.Add(this.combobox_detecting);
             this.Controls.Add(this.btn_toggleDetect);
@@ -226,7 +237,7 @@
             this.Controls.Add(this.btn_sendCoords);
             this.Controls.Add(this.lbl_laserAngle);
             this.Controls.Add(this.lbl_circlepoint);
-            this.Controls.Add(this.imgbox_detection);
+            this.Controls.Add(this.imgbox_detection1);
             this.Controls.Add(this.lbl_cameraDimensions);
             this.Controls.Add(this.btn_exit);
             this.Controls.Add(this.imgbox_video);
@@ -234,7 +245,8 @@
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.imgbox_video)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.imgbox_detection)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgbox_detection1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.imgbox_detection2)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -247,7 +259,6 @@
         private Emgu.CV.UI.ImageBox imgbox_video;
         private System.Windows.Forms.Button btn_exit;
         private System.Windows.Forms.Label lbl_cameraDimensions;
-        private Emgu.CV.UI.ImageBox imgbox_detection;
         private System.Windows.Forms.Label lbl_circlepoint;
         private System.Windows.Forms.Label lbl_laserAngle;
         private System.Windows.Forms.Button btn_sendCoords;
@@ -260,6 +271,8 @@
         private System.Windows.Forms.Button btn_toggleDetect;
         private System.Windows.Forms.ComboBox combobox_detecting;
         private System.Windows.Forms.Label lbl_detectiong;
+        private Emgu.CV.UI.ImageBox imgbox_detection1;
+        private Emgu.CV.UI.ImageBox imgbox_detection2;
     }
 }
 

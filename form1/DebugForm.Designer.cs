@@ -39,6 +39,7 @@
             this.lbl_x = new System.Windows.Forms.Label();
             this.lbl_mouseActive = new System.Windows.Forms.Label();
             this.lbl_staticLabel = new System.Windows.Forms.Label();
+            this.lbl_center = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // lbl_mouseCoords
@@ -138,11 +139,21 @@
             this.lbl_staticLabel.TabIndex = 13;
             this.lbl_staticLabel.Text = "Left Click to Toggle:";
             // 
+            // lbl_center
+            // 
+            this.lbl_center.AutoSize = true;
+            this.lbl_center.Location = new System.Drawing.Point(369, 336);
+            this.lbl_center.Name = "lbl_center";
+            this.lbl_center.Size = new System.Drawing.Size(15, 13);
+            this.lbl_center.TabIndex = 14;
+            this.lbl_center.Text = "O";
+            // 
             // DebugForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(784, 761);
+            this.Controls.Add(this.lbl_center);
             this.Controls.Add(this.lbl_staticLabel);
             this.Controls.Add(this.lbl_mouseActive);
             this.Controls.Add(this.lbl_x);
@@ -158,8 +169,8 @@
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.SizeChanged += new System.EventHandler(this.DebugForm_SizeChanged);
             this.MouseClick += new System.Windows.Forms.MouseEventHandler(this.DebugForm_MouseClick);
-            this.MouseEnter += new System.EventHandler(this.Form1_MouseEnter);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -178,5 +189,6 @@
         private System.Windows.Forms.Label lbl_x;
         private System.Windows.Forms.Label lbl_mouseActive;
         private System.Windows.Forms.Label lbl_staticLabel;
+        private System.Windows.Forms.Label lbl_center;
     }
 }
