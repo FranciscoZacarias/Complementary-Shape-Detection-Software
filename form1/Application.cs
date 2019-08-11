@@ -68,13 +68,19 @@ namespace form1
         private void newFrame(object sender, EventArgs arg)
         {
             //clean video
-            originalImage = capture.QueryFrame().ToImage<Bgr, Byte>();
-            imgbox_video.Image = originalImage.Resize(imgbox_video.Size.Width, imgbox_video.Size.Height, Inter.Nearest);
+            originalImage = capture.QueryFrame().ToImage<Bgr, Byte>().Resize(imgbox_video.Size.Width, imgbox_video.Size.Height, Inter.Nearest);
+            imgbox_video.Image = originalImage;
 
             //detection video
-            images_detected = Detector.DrawCircle(originalImage, lbl_circlepoint);
-            imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
-            imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
+            switch(combobox_detecting.Text)
+            {
+                case "Circle":
+                    detectCircle();
+                break;
+                default:
+                    noDetections();
+                break;
+            }
 
             //get laser angle
             readSerialData();
@@ -89,13 +95,26 @@ namespace form1
                 {
                     servo_x = read_serial.Substring(0, read_serial.IndexOf("Y")).Substring(1);
                     servo_y = read_serial.Substring(read_serial.IndexOf("Y")).Substring(1);
-                    lbl_laserAngle.Text = String.Format("Laser Coords: X:{0} Y:{1}", servo_x, servo_y);
+                    lbl_laserAngle.Text = String.Format("Laser Coords: {{X={0} Y={1}}}", servo_x, servo_y);
                 }
                 catch (Exception e)
                 {
                     Console.WriteLine(e);
                 }
             }
+        }
+
+        private void detectCircle()
+        {
+            images_detected = Detector.DrawCircle(originalImage, lbl_circlepoint);
+            imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
+            imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
+        }
+
+        private void noDetections()
+        {
+            imgbox_detection1.Image = originalImage.Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
+            imgbox_detection2.Image = originalImage.Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest).CopyBlank();
         }
 
         public void writeToPortUnparsed(Point point)

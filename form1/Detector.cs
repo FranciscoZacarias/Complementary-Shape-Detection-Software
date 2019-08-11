@@ -16,19 +16,21 @@ namespace form1
 {
     public static class Detector
     {
-        static CircleF last_circle;
+        static double CANNY_TRESHOLD = 180.0;
+        static double CIRCLE_ACCUMULATOR_TRESHOLD = 120.0;
 
         public static List<Image<Bgr, Byte>> DrawCircle(Image<Bgr, Byte> image, Label circle_label = null)
         {
             List<Image<Bgr, Byte>> imgs = new List<Image<Bgr, byte>>();
-            List<CircleF> circles = DetectCircle(image);
+            UMat uimage = removeNoise(image);
+            List<CircleF> circles = CvInvoke.HoughCircles(uimage, HoughType.Gradient, 2.0, 20.0, CANNY_TRESHOLD, CIRCLE_ACCUMULATOR_TRESHOLD, 5).ToList();
 
             imgs.Add(image);
             imgs.Add(image.CopyBlank());
 
             if (circles.Count > 0)
             {
-                last_circle = circles[circles.Count - 1];
+                CircleF last_circle = circles[circles.Count - 1];
                 if (circle_label != null)
                     circle_label.Text = "Circle Coords: " + last_circle.Center;
                 foreach (Image<Bgr, Byte> img in imgs)
@@ -38,7 +40,7 @@ namespace form1
             return imgs;
         }
 
-        private static List<CircleF> DetectCircle(Image<Bgr, Byte> frame)
+        private static UMat removeNoise(Image<Bgr, Byte> frame)
         {
             //define
             UMat uimage = new UMat();
@@ -49,11 +51,9 @@ namespace form1
             CvInvoke.PyrDown(uimage, pyrDown);
             CvInvoke.PyrUp(pyrDown, uimage);
 
-            double cannyThreshold = 180.0;
-            double circleAccumulatorThreshold = 120;
-            CircleF[] found_circles = CvInvoke.HoughCircles(uimage, HoughType.Gradient, 2.0, 20.0, cannyThreshold, circleAccumulatorThreshold, 5);
-
-            return found_circles.ToList();
+            return uimage;
         }
+
+        
     }
 }

@@ -6,7 +6,7 @@ int servoy = 10;
 int servox = 11;
 int laser = 13;
 //endpins
-
+slipk
 int relay_state = HIGH;
 
 Servo servo_x;

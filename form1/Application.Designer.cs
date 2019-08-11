@@ -113,7 +113,7 @@
             // 
             // btn_sendCoords
             // 
-            this.btn_sendCoords.Location = new System.Drawing.Point(12, 646);
+            this.btn_sendCoords.Location = new System.Drawing.Point(12, 648);
             this.btn_sendCoords.Name = "btn_sendCoords";
             this.btn_sendCoords.Size = new System.Drawing.Size(88, 23);
             this.btn_sendCoords.TabIndex = 10;
@@ -124,7 +124,7 @@
             // lbl_x
             // 
             this.lbl_x.AutoSize = true;
-            this.lbl_x.Location = new System.Drawing.Point(12, 625);
+            this.lbl_x.Location = new System.Drawing.Point(12, 627);
             this.lbl_x.Name = "lbl_x";
             this.lbl_x.Size = new System.Drawing.Size(17, 13);
             this.lbl_x.TabIndex = 11;
@@ -133,7 +133,7 @@
             // lbl_y
             // 
             this.lbl_y.AutoSize = true;
-            this.lbl_y.Location = new System.Drawing.Point(54, 626);
+            this.lbl_y.Location = new System.Drawing.Point(54, 628);
             this.lbl_y.Name = "lbl_y";
             this.lbl_y.Size = new System.Drawing.Size(17, 13);
             this.lbl_y.TabIndex = 12;
@@ -141,7 +141,7 @@
             // 
             // textbox_x
             // 
-            this.textbox_x.Location = new System.Drawing.Point(26, 622);
+            this.textbox_x.Location = new System.Drawing.Point(26, 624);
             this.textbox_x.Name = "textbox_x";
             this.textbox_x.Size = new System.Drawing.Size(27, 20);
             this.textbox_x.TabIndex = 13;
@@ -149,7 +149,7 @@
             // 
             // textbox_y
             // 
-            this.textbox_y.Location = new System.Drawing.Point(71, 623);
+            this.textbox_y.Location = new System.Drawing.Point(71, 625);
             this.textbox_y.Name = "textbox_y";
             this.textbox_y.Size = new System.Drawing.Size(27, 20);
             this.textbox_y.TabIndex = 14;
@@ -157,7 +157,7 @@
             // 
             // btn_random
             // 
-            this.btn_random.Location = new System.Drawing.Point(106, 646);
+            this.btn_random.Location = new System.Drawing.Point(106, 648);
             this.btn_random.Name = "btn_random";
             this.btn_random.Size = new System.Drawing.Size(88, 23);
             this.btn_random.TabIndex = 26;
@@ -167,7 +167,7 @@
             // 
             // btn_debug
             // 
-            this.btn_debug.Location = new System.Drawing.Point(106, 620);
+            this.btn_debug.Location = new System.Drawing.Point(106, 622);
             this.btn_debug.Name = "btn_debug";
             this.btn_debug.Size = new System.Drawing.Size(88, 23);
             this.btn_debug.TabIndex = 27;
@@ -178,18 +178,18 @@
             // btn_toggleDetect
             // 
             this.btn_toggleDetect.BackColor = System.Drawing.Color.Tomato;
-            this.btn_toggleDetect.Location = new System.Drawing.Point(200, 620);
+            this.btn_toggleDetect.Location = new System.Drawing.Point(200, 622);
             this.btn_toggleDetect.Name = "btn_toggleDetect";
             this.btn_toggleDetect.Size = new System.Drawing.Size(88, 49);
             this.btn_toggleDetect.TabIndex = 28;
-            this.btn_toggleDetect.Text = "TOGGLE DETECTION";
+            this.btn_toggleDetect.Text = "TOGGLE MOVEMENT";
             this.btn_toggleDetect.UseVisualStyleBackColor = false;
             this.btn_toggleDetect.Click += new System.EventHandler(this.btn_toggleDetect_Click);
             // 
             // combobox_detecting
             // 
             this.combobox_detecting.FormattingEnabled = true;
-            this.combobox_detecting.Location = new System.Drawing.Point(356, 648);
+            this.combobox_detecting.Location = new System.Drawing.Point(356, 650);
             this.combobox_detecting.Name = "combobox_detecting";
             this.combobox_detecting.Size = new System.Drawing.Size(94, 21);
             this.combobox_detecting.TabIndex = 29;
@@ -197,7 +197,7 @@
             // lbl_detectiong
             // 
             this.lbl_detectiong.AutoSize = true;
-            this.lbl_detectiong.Location = new System.Drawing.Point(294, 649);
+            this.lbl_detectiong.Location = new System.Drawing.Point(294, 653);
             this.lbl_detectiong.Name = "lbl_detectiong";
             this.lbl_detectiong.Size = new System.Drawing.Size(56, 13);
             this.lbl_detectiong.TabIndex = 30;
