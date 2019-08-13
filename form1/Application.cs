@@ -13,13 +13,11 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 
-
-
 namespace form1
 {
     public partial class Application : Form
     {
-        List<String> detectables = new List<string>() { "Circle", "Square" };
+        List<String> detectables = new List<string>() { "Circle", "Square", "Triangle" };
 
         Capture capture;
         Image<Bgr, Byte> originalImage;
@@ -72,14 +70,21 @@ namespace form1
             imgbox_video.Image = originalImage;
 
             //detection video
-            switch(combobox_detecting.Text)
+            if (combobox_detecting.Text == detectables[0]) // circle
             {
-                case "Circle":
-                    detectCircle();
-                break;
-                default:
-                    noDetections();
-                break;
+                detectCircle();
+            }
+            else if (combobox_detecting.Text == detectables[1]) // square
+            {
+                detectSquare();
+            }
+            else if (combobox_detecting.Text == detectables[2]) // triangle
+            {
+                detectTriangle();
+            }
+            else
+            {
+                noDetections();
             }
 
             //get laser angle
@@ -107,6 +112,20 @@ namespace form1
         private void detectCircle()
         {
             images_detected = Detector.DrawCircle(originalImage, lbl_circlepoint);
+            imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
+            imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
+        }
+
+        private void detectSquare()
+        {
+            images_detected = Detector.getSquaresAndTriangles(originalImage);
+            imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
+            imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
+        }
+
+        private void detectTriangle()
+        {
+            images_detected = Detector.getSquaresAndTriangles(originalImage, false);
             imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
             imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
         }
