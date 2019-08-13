@@ -17,7 +17,7 @@ namespace form1
 {
     public partial class Application : Form
     {
-        List<String> detectables = new List<string>() { "Circle", "Square", "Triangle" };
+        List<String> detectables = new List<string>() { "Circle", "Square", "Triangle", "Nothing" };
 
         Capture capture;
         Image<Bgr, Byte> originalImage;
@@ -125,7 +125,7 @@ namespace form1
 
         private void detectTriangle()
         {
-            images_detected = Detector.getSquaresAndTriangles(originalImage, false);
+            images_detected = Detector.getSquaresAndTriangles(originalImage, true);
             imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
             imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
         }
