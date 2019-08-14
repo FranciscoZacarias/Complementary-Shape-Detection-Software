@@ -44,7 +44,7 @@ namespace form1
             return imgs;
         }
         
-        public static List<Image<Bgr, Byte>> getSquaresAndTriangles(Image<Bgr, Byte> image, bool isTriangle = false)
+        public static List<Image<Bgr, Byte>> getSquaresAndTriangles(Image<Bgr, Byte> image, bool isTriangle = false, Label shape_label = null)
         {
             List<Triangle2DF> triangleList = new List<Triangle2DF>();
             List<RotatedRect> boxList = new List<RotatedRect>();
@@ -88,7 +88,6 @@ namespace form1
                         }
                         else if (approxContour.Size == 4) //The contour has 4 vertices.
                         {
-                            #region determine if all the angles in the contour are within [80, 100] degree
                             bool isRectangle = true;
                             Point[] pts = approxContour.ToArray();
                             LineSegment2D[] edges = PointCollection.PolyLine(pts, true);
@@ -103,7 +102,6 @@ namespace form1
                                     break;
                                 }
                             }
-                            #endregion
 
                             if (isRectangle) boxList.Add(CvInvoke.MinAreaRect(approxContour));
                         }
@@ -111,25 +109,29 @@ namespace form1
                 }
             }
 
-            return (isTriangle) ? drawTriangle(imgs, triangleList) : drawSquare(imgs, boxList);
+            return (isTriangle) ? drawTriangle(imgs, triangleList, shape_label) : drawSquare(imgs, boxList, shape_label);
         }
 
-        private static List<Image<Bgr, Byte>> drawTriangle(List<Image<Bgr, Byte>> imgs, List<Triangle2DF> triangleList)
+        private static List<Image<Bgr, Byte>> drawTriangle(List<Image<Bgr, Byte>> imgs, List<Triangle2DF> triangleList, Label triangle_label)
         {
             if (triangleList.Count > 0)
             {
                 Triangle2DF last_triangle = triangleList[triangleList.Count - 1];
+                if (triangle_label != null)
+                    triangle_label.Text = "Triangle Coords: " + last_triangle.Centeroid.ToString();
                 foreach (Image<Bgr, Byte> img in imgs)
                     img.Draw(last_triangle, new Bgr(Color.Brown), 2);
             }
             return imgs;
         }
 
-        private static List<Image<Bgr, Byte>> drawSquare(List<Image<Bgr, Byte>> imgs, List<RotatedRect> boxList)
+        private static List<Image<Bgr, Byte>> drawSquare(List<Image<Bgr, Byte>> imgs, List<RotatedRect> boxList, Label square_label)
         {
             if (boxList.Count > 0)
             {
                 RotatedRect last_box = boxList[boxList.Count - 1];
+                if (square_label != null)
+                    square_label.Text = "Square Coords: " + last_box.Center.ToString();
                 foreach (Image<Bgr, Byte> img in imgs)
                     img.Draw(last_box, new Bgr(Color.Brown), 2);
             }
@@ -138,11 +140,9 @@ namespace form1
 
         private static UMat removeNoise(Image<Bgr, Byte> frame)
         {
-            //define
             UMat uimage = new UMat();
             CvInvoke.CvtColor(frame, uimage, ColorConversion.Bgr2Gray);
-
-            //remove noise
+            
             UMat pyrDown = new UMat();
             CvInvoke.PyrDown(uimage, pyrDown);
             CvInvoke.PyrUp(pyrDown, uimage);

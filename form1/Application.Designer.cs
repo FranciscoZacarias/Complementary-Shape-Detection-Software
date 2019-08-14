@@ -34,7 +34,7 @@
             this.imgbox_video = new Emgu.CV.UI.ImageBox();
             this.btn_exit = new System.Windows.Forms.Button();
             this.lbl_cameraDimensions = new System.Windows.Forms.Label();
-            this.lbl_circlepoint = new System.Windows.Forms.Label();
+            this.lbl_shapepoint = new System.Windows.Forms.Label();
             this.lbl_laserAngle = new System.Windows.Forms.Label();
             this.btn_sendCoords = new System.Windows.Forms.Button();
             this.lbl_x = new System.Windows.Forms.Label();
@@ -93,14 +93,14 @@
             this.lbl_cameraDimensions.TabIndex = 6;
             this.lbl_cameraDimensions.Text = "Cam Dimensions";
             // 
-            // lbl_circlepoint
+            // lbl_shapepoint
             // 
-            this.lbl_circlepoint.AutoSize = true;
-            this.lbl_circlepoint.Location = new System.Drawing.Point(12, 517);
-            this.lbl_circlepoint.Name = "lbl_circlepoint";
-            this.lbl_circlepoint.Size = new System.Drawing.Size(72, 13);
-            this.lbl_circlepoint.TabIndex = 8;
-            this.lbl_circlepoint.Text = "Circle Coords:";
+            this.lbl_shapepoint.AutoSize = true;
+            this.lbl_shapepoint.Location = new System.Drawing.Point(12, 517);
+            this.lbl_shapepoint.Name = "lbl_shapepoint";
+            this.lbl_shapepoint.Size = new System.Drawing.Size(77, 13);
+            this.lbl_shapepoint.TabIndex = 8;
+            this.lbl_shapepoint.Text = "Shape Coords:";
             // 
             // lbl_laserAngle
             // 
@@ -236,7 +236,7 @@
             this.Controls.Add(this.lbl_x);
             this.Controls.Add(this.btn_sendCoords);
             this.Controls.Add(this.lbl_laserAngle);
-            this.Controls.Add(this.lbl_circlepoint);
+            this.Controls.Add(this.lbl_shapepoint);
             this.Controls.Add(this.imgbox_detection1);
             this.Controls.Add(this.lbl_cameraDimensions);
             this.Controls.Add(this.btn_exit);
@@ -259,7 +259,7 @@
         private Emgu.CV.UI.ImageBox imgbox_video;
         private System.Windows.Forms.Button btn_exit;
         private System.Windows.Forms.Label lbl_cameraDimensions;
-        private System.Windows.Forms.Label lbl_circlepoint;
+        private System.Windows.Forms.Label lbl_shapepoint;
         private System.Windows.Forms.Label lbl_laserAngle;
         private System.Windows.Forms.Button btn_sendCoords;
         private System.Windows.Forms.Label lbl_x;

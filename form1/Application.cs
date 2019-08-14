@@ -111,27 +111,28 @@ namespace form1
 
         private void detectCircle()
         {
-            images_detected = Detector.DrawCircle(originalImage, lbl_circlepoint);
+            images_detected = Detector.DrawCircle(originalImage, lbl_shapepoint);
             imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
             imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
         }
 
         private void detectSquare()
         {
-            images_detected = Detector.getSquaresAndTriangles(originalImage);
+            images_detected = Detector.getSquaresAndTriangles(originalImage, false, lbl_shapepoint);
             imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
             imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
         }
 
         private void detectTriangle()
         {
-            images_detected = Detector.getSquaresAndTriangles(originalImage, true);
+            images_detected = Detector.getSquaresAndTriangles(originalImage, true, lbl_shapepoint);
             imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
             imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
         }
 
         private void noDetections()
         {
+            lbl_shapepoint.Text = "Coords: ";
             imgbox_detection1.Image = originalImage.Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
             imgbox_detection2.Image = originalImage.Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest).CopyBlank();
         }
