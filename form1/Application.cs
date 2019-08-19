@@ -13,6 +13,7 @@ using Emgu.CV;
 using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 
+
 namespace form1
 {
     public partial class Application : Form
@@ -52,7 +53,7 @@ namespace form1
             {
                 capture = new Emgu.CV.Capture();
 
-                System.Windows.Forms.Application.Idle += newFrame; 
+                System.Windows.Forms.Application.Idle += newFrame;
 
                 lbl_cameraDimensions.Text = "Cam. Dimensions: W:" + capture.Width.ToString() + "H:" + capture.Height.ToString();
             }
@@ -144,8 +145,16 @@ namespace form1
 
         public void openPort()
         {
-            if(!port.IsOpen)
-                port.Open();
+            try
+            {
+                if (!port.IsOpen)
+                    port.Open();
+            }
+            catch(Exception e)
+            {
+                MessageBox.Show("SERIAL PORT NOT FOUND", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Environment.Exit(0);
+            }
         }
 
         private void btn_exit_Click(object sender, EventArgs e)

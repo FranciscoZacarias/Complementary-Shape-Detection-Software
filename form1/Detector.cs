@@ -14,6 +14,7 @@ using Emgu.CV.CvEnum;
 using Emgu.CV.Util;
 using Emgu.CV.UI;
 
+
 namespace form1
 {
     public static class Detector
@@ -43,7 +44,7 @@ namespace form1
 
             return imgs;
         }
-        
+
         public static List<Image<Bgr, Byte>> getSquaresAndTriangles(Image<Bgr, Byte> image, bool isTriangle = false, Label shape_label = null)
         {
             List<Triangle2DF> triangleList = new List<Triangle2DF>();
@@ -142,7 +143,7 @@ namespace form1
         {
             UMat uimage = new UMat();
             CvInvoke.CvtColor(frame, uimage, ColorConversion.Bgr2Gray);
-            
+
             UMat pyrDown = new UMat();
             CvInvoke.PyrDown(uimage, pyrDown);
             CvInvoke.PyrUp(pyrDown, uimage);
