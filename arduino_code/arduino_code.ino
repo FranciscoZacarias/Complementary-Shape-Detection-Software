@@ -2,11 +2,10 @@
 
 //pins
 int relay = 8;
-int servoy = 10;
-int servox = 11;
+int servoy = 11;
+int servox = 10;
 int laser = 13;
 //endpins
-slipk
 int relay_state = HIGH;
 
 Servo servo_x;
