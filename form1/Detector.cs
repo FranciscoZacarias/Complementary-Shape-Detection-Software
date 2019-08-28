@@ -13,7 +13,7 @@ using Emgu.CV.Structure;
 using Emgu.CV.CvEnum;
 using Emgu.CV.Util;
 using Emgu.CV.UI;
-
+using System.IO.Ports;
 
 namespace form1
 {
@@ -23,7 +23,9 @@ namespace form1
         static double CIRCLE_ACCUMULATOR_TRESHOLD = 120.0;
         static double CANNY_TRESHOLD_LINKING = 120;
 
-        public static List<Image<Bgr, Byte>> DrawCircle(Image<Bgr, Byte> image, Label circle_label = null)
+        static Stopwatch static_watch = Stopwatch.StartNew();
+
+        public static List<Image<Bgr, Byte>> DrawCircle(Image<Bgr, Byte> image, SerialPort port, Label circle_label = null)
         {
             List<CircleF> circles;
             List<Image<Bgr, Byte>> imgs = new List<Image<Bgr, byte>>();
@@ -38,6 +40,11 @@ namespace form1
                 CircleF last_circle = circles[circles.Count - 1];
                 if (circle_label != null)
                     circle_label.Text = "Circle Coords: " + last_circle.Center;
+                if (static_watch.ElapsedMilliseconds > 15)
+                {
+                    static_watch = Stopwatch.StartNew();
+                    port.Write(String.Format("X{0}Y{1}", 180 - last_circle.Center.X / Constants.divisor_x, 180 - last_circle.Center.Y / Constants.divisor_y));
+                }
                 foreach (Image<Bgr, Byte> img in imgs)
                     img.Draw(last_circle, new Bgr(Color.Brown), 2);
             }

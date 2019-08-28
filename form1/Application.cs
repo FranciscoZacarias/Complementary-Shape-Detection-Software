@@ -40,7 +40,6 @@ namespace form1
         private void Form1_Load(object sender, EventArgs e)
         {
             openPort();
-            writeToPortUnparsed(new Point(80, 80));
 
             foreach (String detectable in detectables)
                 combobox_detecting.Items.Add(detectable);
@@ -66,8 +65,11 @@ namespace form1
 
         private void newFrame(object sender, EventArgs arg)
         {
-            //clean video
             originalImage = capture.QueryFrame().ToImage<Bgr, Byte>().Resize(imgbox_video.Size.Width, imgbox_video.Size.Height, Inter.Nearest);
+            CircleF center = new CircleF(new Point(originalImage.Width / 2, originalImage.Height / 2), 5);
+            originalImage.Draw(center, new Bgr(Color.Brown), 2);
+
+            //clean video
             imgbox_video.Image = originalImage;
 
             //detection video
@@ -112,7 +114,7 @@ namespace form1
 
         private void detectCircle()
         {
-            images_detected = Detector.DrawCircle(originalImage, lbl_shapepoint);
+            images_detected = Detector.DrawCircle(originalImage, port, lbl_shapepoint);
             imgbox_detection1.Image = images_detected[0].Resize(imgbox_detection1.Size.Width, imgbox_detection1.Size.Height, Inter.Nearest);
             imgbox_detection2.Image = images_detected[1].Resize(imgbox_detection2.Size.Width, imgbox_detection2.Size.Height, Inter.Nearest);
         }
@@ -153,6 +155,7 @@ namespace form1
             catch(Exception e)
             {
                 MessageBox.Show("SERIAL PORT NOT FOUND", "ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                Console.WriteLine(e);
                 Environment.Exit(0);
             }
         }

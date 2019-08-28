@@ -27,7 +27,6 @@ namespace form1
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            centerLabel();
             watch = Stopwatch.StartNew();
         }
 
@@ -74,16 +73,6 @@ namespace form1
             isMouseMoveActive = !isMouseMoveActive;
             toggleCursorClip();
             lbl_mouseActive.Text = (isMouseMoveActive) ? "MOUSE ACTIVE" : "MOUSE INACTIVE";
-        }
-
-        private void centerLabel()
-        {
-            lbl_center.Location = new Point(Size.Width / 2, Size.Height / 2);
-        }
-
-        private void DebugForm_SizeChanged(object sender, EventArgs e)
-        {
-            centerLabel();
         }
     }
 }
