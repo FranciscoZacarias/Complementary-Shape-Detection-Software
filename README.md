@@ -8,4 +8,4 @@ The following video is the base project on what this was built on. While it didn
 
 [![IMAGE ALT TEXT](https://i.ytimg.com/vi/fKnLFIDZh9g/hqdefault.jpg?sqp=-oaymwEZCNACELwBSFXyq4qpAwsIARUAAIhCGAFwAQ==&rs=AOn4CLAp_g3-Pcuo87AjTRqTvk9Ct0T6Qg)](https://www.youtube.com/watch?v=fKnLFIDZh9g")
 
-With this implementation, the input would be the detected shape's center coordinates times a constant found in the [Constants](https://github.com/FranciscoZacarias/Complementary-Shape-Detection-Software/blob/master/form1/Constants.cs). Note that these are hardcoded, meaning that I came up with them via trial and error, since it heavily dependent on my hardware setup (Distance between webcam and object).
+With this implementation, the input would be the detected shape's center coordinates times a constant found in the [Constants](https://github.com/FranciscoZacarias/Complementary-Shape-Detection-Software/blob/master/form1/Constants.cs). Note that these are hardcoded, meaning that I came up with them via trial and error, since it heavily dependent on my hardware setup (Distance between webcam and object, Webcam's X and Y angle).
